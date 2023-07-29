@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+{% block title %}Create a Blog!{% endblock title %}
+
+{% block body %}
+{% if messages %}
+  <div class="alert alert-success alert-dismissible fade show messages" role="alert">
+      {% for message in messages %}
+      {% if message.tags %} <p class="{{ message.tags }}">{% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+          {{ message }}
+          <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="alert" aria-label="Close"></button>
+      </p>
+      {% endfor %}
+  </div>
+  {% endif %}
+<main style="font-family: cursive;">
+    <div style="display:flex; align-items:center;justify-content:center;width:100vw;height:10vh;">
+    <h1 style="margin-top:34px;">Create a Blog on E-Raksha</h1>
+    </div>
+    <form class="container" enctype="multipart/form-data" action="{% url 'create' %}" method="post" style="margin-top:34px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        {% csrf_token %}
+        <div class="mb-3">
+    
+            <label for="name" class="form-label">Uploader Name</label>
+            <input type="text" name="u_name"  class="form-control" id="name">
+          </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Blog Title</label>
+          <input type="text" name="u_title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <input type="file" name="photo" class="form-control" >
+        </div>
+        <div class="mb-3" >
+          <label for="exampleInputPassword1" class="form-label">Blog description</label>
+          <textarea name="descp" class="form-control" id="exampleInputEmail1" cols="30" rows="10"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="date" class="form-label">Uploading Date</label>
+          <input type="text" name="date" class="form-control" id="date" placeholder="YYYY-MM-DD">
+          <div id="emailHelp" class="form-text">Date Format should be YYYY-MM-DD , if you dont input this you will get an error </div>
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary" style="margin-bottom:34px;">Upload</button>
+      </form>
+    </main>
+    
+
+{% endblock body %}

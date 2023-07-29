@@ -1,0 +1,104 @@
+{% extends 'index.html' %} 
+{% block title %}Blog Post{% endblock title %} 
+{% block body %} 
+{% load humanize static %}
+
+
+{% if messages %}
+<div
+  class="alert alert-success alert-dismissible fade show messages"
+  role="alert"
+>
+  {% for message in messages %} {% if message.tags %}
+  <p class="{{ message.tags }}">
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important:
+    {% endif %} {{ message }}
+    <button
+      type="button"
+      class="btn-close btn btn-danger"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    >
+    </button>
+  </p>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div style="padding: 34px; width: 100vw; height: 84vh">
+  <div
+    class="container"
+    style="
+      font-family: 'Open Sans', sans-serif;
+      display: flex;
+      padding: 12px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: aliceblue;
+      width: 83em;
+      height: auto;
+      margin-bottom: 34px;
+    "
+  >
+    <img
+      src="/media/{{info.b_photo}}"
+      style="margin: 12px 0; width: 55pc; border-radius: 25px"
+      alt=""
+    />
+    <h1
+      class="text-center"
+      style="margin: 12px 0; font-weight: 1000; font-size: 75px"
+    >
+      {{info.b_name}}
+    </h1>
+    <p style="font-size: 22px; margin-bottom: 12px">By - {{info.b_author}}</p>
+    <p style="font-size: 22px; margin-bottom: 12px">On - {{info.b_date}}</p>
+    <p style="white-space: pre-line">{{info.b_descp|safe}}</p>
+  </div>
+  <div class="container my-10">
+    <h2>Comments ({{comments.count}})</h2>
+    <div class="my-2">
+        {% if user.is_authenticated %}
+        <form action="/postcomment/" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">Post Comment </label>
+                <input
+                type="text"
+                class="form-control my-3"
+                name="comment"
+                placeholder="Enter comment here"
+                />
+            </div>
+            <input type="hidden" name="postSno" value="{{info.s_no}}" />
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+          {% else %}
+          <p>Please login to post a comment</p>
+        {% endif %}
+        
+    </div>
+
+    {% for comment in comments %}
+        <div class="row my-3">
+        <div class="col-md-1">
+            <img
+            class="rounded mx-auto d-block w-100 p-2"
+            src="/static/user.png"
+            alt="user" >
+        </div>
+        <div class="col-md-11">
+            <b> {{comment.user.username}} </b> <span class="badge bg-secondary">{{comment.timestamp | naturaltime}}</span>
+            <div>{{comment.comment}}</div>
+            
+        </div>
+        </div>
+    {% endfor %}
+    
+  </div>
+</div>
+
+{% endblock body %}

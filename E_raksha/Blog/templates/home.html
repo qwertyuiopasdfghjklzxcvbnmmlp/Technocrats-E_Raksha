@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+{% block title %}Technocrats{% endblock title %}
+
+{% block body %}
+{% if messages %}
+  <div class="alert alert-success alert-dismissible fade show messages" role="alert">
+      {% for message in messages %}
+      {% if message.tags %} <p class="{{ message.tags }}">{% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+          {{ message }}
+          <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="alert" aria-label="Close"></button>
+      </p>
+      {% endfor %}
+  </div>
+  {% endif %}
+
+
+<div style=" margin-top:69px;width:100% ; display:flex ; flex-direction: row; flex-wrap:wrap; align-items: center; justify-content: center;">
+    <div>
+    <h1 style="align-items: center; justify-content: center;font-family: 'Rubik', sans-serif;font-size: 44px;margin-left:10px">Welcome To Our Blog On E-Raksha By TechnoCrats</h1>
+    <div style="margin-left: 3px;align-items: center; justify-content: center;font-family: 'Rubik', sans-serif;font-size: 44px;margin-left:10px,"><h5>By Rukmani Birla Modern High School</h5></div>
+    {% for b in blogs %}
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4" >
+        <div class="card my-5 mx-5" style="width: 18rem;">
+            <img src="/media/{{b.b_photo}}" style="margin:5px" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><a style="color:black;text-decoration:none;" href="/blog/{{b.s_no}}">{{b.b_name|safe}}</a></h5>
+              <p class="card-text">{{b.b_descp|truncatewords:32|safe}}</p>
+              <a  class="btn btn-primary" href="/blog/{{b.s_no}}">Read More</a>
+            </div>
+          </div>
+    
+    
+    
+    {% endfor %}
+    
+</div>
+
+{% endblock body %}

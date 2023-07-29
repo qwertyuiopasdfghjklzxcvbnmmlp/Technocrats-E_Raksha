@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% block title %}Search Results for {{query}} {% endblock title %}
+
+{% block body %}
+
+
+<div class="matter container-fluid" style="border:black;border-radius:15px;display: flex; flex-direction: column; align-items: center;">
+    {% if s_for_title or s_for_author %}
+    {% for u in result %}
+    
+    <img src="/media/{{u.b_photo}}" style="width:65vw;height: 65vh;" >
+</img>
+    <div class="details" style="display: flex; flex-direction: column; align-items: flex-start; margin-left:-34px;">
+      <p style="font-size:34px; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;"><b><i><u><a style="color:black;text-decoration:none;" href="/blog/{{u.s_no}}">{{u.b_name}}</a></u></i></b></p>
+      <p>By - {{u.b_author}}</p>
+      <p>On - {{u.b_date}}</p>
+      <a href="/blog/{{u.s_no}}"style="text-decoration: none;"><button class="btn btn-primary" style="margin:12px 0px;">Read More</button></a>
+    </div>
+    
+    {% endfor %}
+    {% else %}
+    
+    <center><h1 style="font-family:cursive;">No Search Results Found For {{query}}</h1></center>
+    
+    {% endif %}
+
+  </div>
+
+
+
+
+
+
+
+{% endblock body %}
